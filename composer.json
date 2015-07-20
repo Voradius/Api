@@ -1,0 +1,21 @@
+{
+    "name": "voradius/api",
+    "description": "Voradius API service",
+    "authors": [
+        {
+            "name": "Maikel Brouwer",
+            "email": "maikel@voradius.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.5.0",
+        "guzzlehttp/guzzle": "~6.0"
+    }
+    ,
+    "autoload": {
+        "psr-0": {
+          "Voradius": "src/"
+        }
+    }
+}
