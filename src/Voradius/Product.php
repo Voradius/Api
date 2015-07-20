@@ -19,7 +19,7 @@ class Product {
 
     /**
      * Find a product based on its ID
-     * 
+     *
      * @param int $id
      */
     public function getProductById($id = null) {
@@ -28,7 +28,7 @@ class Product {
         }
 
         $response = $this->client->connection()->get(self::SUB_PATH.'/'.$id);
-        echo $response->getBody();
+        return $response->getBody();
     }
 
     /**
@@ -42,7 +42,7 @@ class Product {
         }
 
         $response = $this->client->connection()->get(self::SUB_PATH.'/ean/'.$ean);
-        echo $response->getBody();
+        return $response->getBody();
     }
 
 
