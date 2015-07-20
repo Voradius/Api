@@ -4,7 +4,7 @@ namespace Voradius;
 use Voradius\Product;
 
 class Client {
-    const API_PATH = 'http://api.voradius.nl';
+    const API_PATH = 'http://api.voradius.vagrant';
 
     var $api_key = null;
     private $_connection = null;
@@ -23,7 +23,7 @@ class Client {
 
         //Contruct guzzle connection
         $this->_connection = new \GuzzleHttp\Client([
-            'base_uri' => 'http://api.voradius.nl',
+            'base_uri' => self::API_PATH,
             'headers' => ['X-API-KEY' => $api_key]
         ]);
     }
