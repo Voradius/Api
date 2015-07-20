@@ -1,7 +1,6 @@
 <?php
 
 namespace Voradius;
-use GuzzleHttp\Exception\RequestException;
 
 class Product {
     const SUB_PATH = '/v2/products';
