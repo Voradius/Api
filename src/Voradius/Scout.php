@@ -49,8 +49,10 @@ class Scout {
             'product_id' => $product_id
         );
 
+        $this->client->connectFrontend();
+
         $response = $this->client->connection()->post(
-            self::SUB_PATH,
+            '/product-request/create',
             ['form_params' => $form_params]
         );
 
