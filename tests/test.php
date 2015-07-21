@@ -18,6 +18,10 @@ $productApi = new Product(new Client($argv[1]));
 $product = $productApi->getProductByEan('8806086157100');
 
 echo PHP_EOL.PHP_EOL;
-*/
+
 $scoutApi = new \Voradius\Scout(new Client($argv[1]));
 print_r($scoutApi->getShops('35.120.750')->getContents());
+*/
+
+$scoutApi = new \Voradius\Shop(new Client($argv[1]));
+print_r($scoutApi->getShopById(1)->getContents());

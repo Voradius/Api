@@ -30,4 +30,66 @@ class Scout {
         return $response->getBody();
     }
 
+    /**
+     * Create a new scout request
+     *
+     * @param string $first_name
+     * @param string $last_name
+     * @param string $email
+     * @param string $location
+     * @param int $product_id
+     * @return int
+     */
+    public function addRequest($first_name, $last_name, $email, $location, $product_id) {
+        $form_params = array(
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'email' => $email,
+            'location' => $location,
+            'product_id' => $product_id
+        );
+
+        $response = $this->client->connection()->post(
+            self::SUB_PATH,
+            ['form_params' => $form_params]
+        );
+
+        if ($response->getStatusCode() == 200) {
+            $body = json_decode($response->getBody());
+
+            return (int) $body['id'];
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Get request info
+     *
+     * @param int $id Request ID
+     * @return string JSON response
+     */
+    public function getRequest($id = null) {
+        if ($id == null) {
+            die("Please provide a request ID".PHP_EOL);
+        }
+
+        $response = $this->client->connection()->get(self::SUB_PATH.'/'.$id);
+        return $response->getBody();
+    }
+
+    /**
+     * Get the shops IDS and there responses to the requests
+     *
+     * @param int $id Request ID
+     * @return string JSON response of request details
+     */
+    public function getRequestDetail($id = null) {
+        if ($id == null) {
+            die("Please provide a request ID".PHP_EOL);
+        }
+
+        $response = $this->client->connection()->get(self::SUB_PATH.'/'.$id.'/detail');
+        return $response->getBody();
+    }
 }
