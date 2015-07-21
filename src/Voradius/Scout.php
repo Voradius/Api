@@ -27,7 +27,7 @@ class Scout {
         }
 
         $response = $this->client->connection()->get('/v2/shops/search?category='.$category_id.'&location='.htmlentities($location).'&range=5&size=100&scout=1');
-        return $response->getBody();
+        return $response->getBody()->getContents();
     }
 
     /**
@@ -55,7 +55,7 @@ class Scout {
         );
 
         if ($response->getStatusCode() == 200) {
-            $body = json_decode($response->getBody());
+            $body = json_decode($response->getBody())->getContents();
 
             return (int) $body['id'];
         } else {
@@ -75,7 +75,7 @@ class Scout {
         }
 
         $response = $this->client->connection()->get(self::SUB_PATH.'/'.$id);
-        return $response->getBody();
+        return $response->getBody()->getContents();
     }
 
     /**
@@ -90,6 +90,6 @@ class Scout {
         }
 
         $response = $this->client->connection()->get(self::SUB_PATH.'/'.$id.'/detail');
-        return $response->getBody();
+        return $response->getBody()->getContents();
     }
 }

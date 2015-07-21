@@ -27,7 +27,7 @@ class Product {
         }
 
         $response = $this->client->connection()->get(self::SUB_PATH.'/'.$id);
-        return $response->getBody();
+        return $response->getBody()->getContents();
     }
 
     /**
@@ -41,7 +41,7 @@ class Product {
         }
 
         $response = $this->client->connection()->get(self::SUB_PATH.'/ean/'.$ean);
-        return $response->getBody();
+        return $response->getBody()->getContents();
     }
 
 

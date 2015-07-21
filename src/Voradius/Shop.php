@@ -22,6 +22,6 @@ class Shop
         }
 
         $response = $this->client->connection()->get(self::SUB_PATH.'/'.$id);
-        return $response->getBody();
+        return $response->getBody()->getContents();
     }
 }
