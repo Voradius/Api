@@ -2,6 +2,8 @@
 
 namespace Voradius;
 
+use GuzzleHttp\Exception\RequestException;
+
 class Scout {
     const SUB_PATH = '/v2/scout';
 
@@ -42,8 +44,8 @@ class Scout {
      */
     public function addRequest($first_name, $last_name, $email, $location, $product_id) {
         $form_params = array(
-            'first_name' => $first_name,
-            'last_name' => $last_name,
+            'firstname' => $first_name,
+            'lastname' => $last_name,
             'email' => $email,
             'location' => $location,
             'product_id' => $product_id
@@ -55,11 +57,10 @@ class Scout {
             '/product-request/create',
             ['form_params' => $form_params]
         );
-
+        
         if ($response->getStatusCode() == 200) {
-            $body = json_decode($response->getBody())->getContents();
-
-            return (int) $body['id'];
+            $body = json_decode($response->getBody());
+            return (int) $body->id;
         } else {
             return false;
         }
