@@ -29,7 +29,7 @@ class Reservation
         $this->client->connectFrontend();
 
         $response = $this->client->connection()->post(
-            '/product/iframe',
+            '/product/iframe?shop_id='.$shop_id.'&product_id='.$product_id,
             ['form_params' => $form_params]
         );
 
