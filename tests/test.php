@@ -21,7 +21,19 @@ echo PHP_EOL.PHP_EOL;
 
 $scoutApi = new \Voradius\Scout(new Client($argv[1]));
 print_r($scoutApi->getShops('35.120.750')->getContents());
-*/
 
 $scoutApi = new \Voradius\Shop(new Client($argv[1]));
 print_r($scoutApi->getShopById(1)->getContents());
+
+
+$scoutApi = new \Voradius\Shop(new Client($argv[1]));
+$reservationApi = new \Voradius\Reservation();
+$reservationApi->addReservation(
+    'Maikel',
+    'Brouwer',
+    'maikel@voradius.com',
+    8257,
+    2741332,
+    "0681804253"
+);
+*/
