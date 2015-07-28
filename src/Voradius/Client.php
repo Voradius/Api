@@ -36,15 +36,19 @@ class Client {
 
     public function connectAPI($api_key) {
         $this->_connection = new \GuzzleHttp\Client([
-            'base_uri' => $this->getApiUrl(),
-            'headers' => ['X-API-KEY' => $api_key]
+            'base_url' => $this->getApiUrl(),
+            'defaults' => [
+                'headers' => ['X-API-KEY' => $api_key]
+            ]
         ]);
     }
 
     public function connectFrontend() {
         $this->_connection = new \GuzzleHttp\Client([
-            'base_uri' => $this->getFrontendUrl(),
-            'headers' => ['X-API-KEY' => $this->_api_key]
+            'base_url' => $this->getFrontendUrl(),
+            'defaults' => [
+                'headers' => ['X-API-KEY' => $this->_api_key]
+            ]
         ]);
     }
 
