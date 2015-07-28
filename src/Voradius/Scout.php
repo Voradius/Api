@@ -59,7 +59,7 @@ class Scout {
         );
         
         if ($response->getStatusCode() == 200) {
-            $body = json_decode($response->getBody());
+            $body = json_decode($response->getBody()->getContents());
             return (int) $body->id;
         } else {
             return false;
