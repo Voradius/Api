@@ -55,7 +55,7 @@ class Scout {
 
         $response = $this->client->connection()->post(
             '/product-request/create',
-            ['form_params' => $form_params]
+            ['body' => $form_params]
         );
         
         if ($response->getStatusCode() == 200) {
