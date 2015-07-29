@@ -30,7 +30,7 @@ class Reservation
 
         $response = $this->client->connection()->post(
             '/product/iframe?shop_id='.$shop_id.'&product_id='.$product_id,
-            ['form_params' => $form_params]
+            ['body' => $form_params]
         );
 
         if ($response->getStatusCode() == 200) {
