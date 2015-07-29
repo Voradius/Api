@@ -44,5 +44,13 @@ class Product {
         return $response->getBody()->getContents();
     }
 
+    public function getProductCategories($id = null) {
+        if ($id == null) {
+            die("Please provide a product ID".PHP_EOL);
+        }
+
+        $response = $this->client->connection()->get(self::SUB_PATH.'/categories/'.$id);
+        return $response->getBody()->getContents();
+    }
 
 }
