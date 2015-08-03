@@ -28,7 +28,7 @@ class Scout {
             die("Please provide a category ID".PHP_EOL);
         }
 
-        $response = $this->client->connection()->get('/v2/shops/search?category='.$category_id.'&location='.htmlentities($location).'&range=5&size=100&scout=1');
+        $response = $this->client->connection()->get('/v2/shops/search?category='.$category_id.'&location='.htmlentities($location).'&range=5&size=200&scout=1');
         return $response->getBody()->getContents();
     }
 
