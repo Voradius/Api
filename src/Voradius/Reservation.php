@@ -16,7 +16,7 @@ class Reservation
         $this->client = $client;
     }
 
-    public function addReservation($first_name, $last_name, $email, $shop_id, $product_id, $phonenumber) {
+    public function addReservation($first_name, $last_name, $email, $shop_id, $product_id, $phonenumber, $product_request_id = null) {
         $form_params = array(
             'firstname' => $first_name,
             'lastname' => $last_name,
@@ -29,7 +29,7 @@ class Reservation
         $this->client->connectFrontend();
 
         $response = $this->client->connection()->post(
-            '/product/iframe?shop_id='.$shop_id.'&product_id='.$product_id,
+            '/product/iframe?shop_id='.$shop_id.'&product_id='.$product_id.'&product_request_id='.$product_request_id,
             ['body' => $form_params]
         );
 
