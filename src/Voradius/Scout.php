@@ -68,6 +68,30 @@ class Scout {
         }
     }
 
+    public function retailerReply($id, $unique, array $data) {
+        $whitelist = ['in_assortment', 'in_stock', 'has_alternative', 'can_order', 'price', 'comment'];
+        foreach($data as $key => $value) {
+            if(!in_array($key, $whitelist)) {
+                unset($data[$key]);
+            }
+        }
+
+        if(empty($data)) {
+            return false;
+        }
+
+        $response = $this->client->connection()->post(
+            '/productrequests/retailer-reply/' . $id . '/' . $unique,
+            ['body' => $data]
+        );
+
+        if ($response->getStatusCode() == 200) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Get request info
      *
