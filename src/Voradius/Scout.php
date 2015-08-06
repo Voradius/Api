@@ -82,7 +82,7 @@ class Scout {
         }
 
         $response = $this->client->connection()->post(
-            '/productrequests/retailer-reply/' . $id . '/' . $unique,
+            '/v2/productrequests/retailer-reply/' . $id . '/' . $unique,
             ['body' => $data]
         );
 
