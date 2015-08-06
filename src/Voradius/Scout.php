@@ -83,7 +83,7 @@ class Scout {
 
         $response = $this->client->connection()->post(
             '/v2/productrequests/retailer-reply/' . $id . '/' . $unique,
-            ['body' => $data]
+            ['body' => json_encode($data)]
         );
 
         if ($response->getStatusCode() == 200) {
