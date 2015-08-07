@@ -43,7 +43,7 @@ class Scout {
      * @param string $source
      * @return int
      */
-    public function addRequest($first_name, $last_name, $email, $location, $product_id, $unique_id, $source='website') {
+    public function addRequest($first_name, $last_name, $email, $location, $product_id, $unique_id, $phonenumber, $source='website') {
         $form_params = array(
             'firstname' => $first_name,
             'lastname' => $last_name,
@@ -51,7 +51,8 @@ class Scout {
             'location' => $location,
             'product_id' => $product_id,
             'unique_id' => $unique_id,
-            'source' => $source
+            'source' => $source,
+            'phonenumber' => $phonenumber
         );
 
         $this->client->connectFrontend();
