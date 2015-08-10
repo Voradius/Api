@@ -68,7 +68,7 @@ class Shop implements EntityInterface
             throw new InvalidParameterException('Invalid unique id given');
         }
 
-        $response = $this->client->getConnection()->get(self::PATH . '/unique/' . $id);
+        $response = $this->client->getConnection()->get(self::PATH . '?unique=' . $id);
         return $response->getBody()->getContents();
     }
 }
