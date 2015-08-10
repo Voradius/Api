@@ -1,6 +1,7 @@
 <?php namespace Voradius;
 
 use Voradius\Exceptions\InvalidParameterException;
+use Voradius\Exceptions\ParameterNotAllowedException;
 use Voradius\Product;
 
 class Client implements ClientInterface
@@ -50,11 +51,11 @@ class Client implements ClientInterface
         }
 
         if(!in_array($env, [self::LOCAL, self::LIVE, self::SANDBOX, self::STAGING])) {
-            throw new InvalidParameterException('Unknown environment');
+            throw new ParameterNotAllowedException('Unknown environment');
         }
 
         if(!in_array($part, [self::PART_API, self::PART_FRONTEND])) {
-            throw new InvalidParameterException('Unknown part');
+            throw new ParameterNotAllowedException('Unknown part');
         }
 
         $this->setApiKey($api_key);
@@ -67,6 +68,7 @@ class Client implements ClientInterface
                 break;
             case 2:
                 $this->_connection = ClientFrontendFactory::newInstance($this->getFrontendUrl(), $this->getApiKey());
+                break;
         }
     }
 
