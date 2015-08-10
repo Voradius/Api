@@ -24,4 +24,13 @@ class Shop
         $response = $this->client->connection()->get(self::SUB_PATH.'/'.$id);
         return $response->getBody()->getContents();
     }
+
+    public function getShopByUniqueId($id = null) {
+        if ($id == null) {
+            die("Please provide a unique ID".PHP_EOL);
+        }
+
+        $response = $this->client->connection()->get(self::SUB_PATH.'/unique/'.$id);
+        return $response->getBody()->getContents();
+    }
 }
