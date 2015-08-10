@@ -1,6 +1,7 @@
 <?php namespace Voradius\Entity;
 use Voradius\ClientInterface;
 use Voradius\Exceptions\InvalidParameterException;
+use Voradius\Exceptions\ParameterNotAllowedException;
 use Voradius\Helpers\Url;
 
 /**
@@ -18,6 +19,11 @@ class Shop implements EntityInterface
      * @var ClientInterface
      */
     private $client;
+
+    /**
+     * @var array
+     */
+    private $searchWhitelist = ['phone', 'name', 'street', 'zipcode', 'page', 'location', 'category', 'range'];
 
     /**
      * Product constructor.
@@ -42,7 +48,32 @@ class Shop implements EntityInterface
         }
 
         $response = $this->client->getConnection()->get(Url::build(self::PATH, 'search', [
-            'category' => $category_id, 'location' => $location, 'range' => 2, 'size' => 200, 'scout' => 1]));
+            'category' => $category_id,
+            'location' => $location,
+            'range' => 2,
+            'size' => 200,
+            'scout' => 1]));
+        return $response->getBody()->getContents();
+    }
+
+    /**
+     * @param array $params
+     * @return mixed
+     * @throws InvalidParameterException
+     * @throws ParameterNotAllowedException
+     */
+    public function getSearch(array $params) {
+        if(empty($params)) {
+            throw new InvalidParameterException('Atleast one parameter is required. Choose from: ' . array_keys($this->searchWhitelist));
+        }
+
+        foreach($params as $key => $value) {
+            if(!in_array($key, $this->searchWhitelist)) {
+                throw new ParameterNotAllowedException('Parameter "' . $key . '" not allowed');
+            }
+        }
+
+        $response = $this->client->getConnection()->get(Url::build(self::PATH, 'search', $params));
         return $response->getBody()->getContents();
     }
 
