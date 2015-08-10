@@ -1,20 +1,43 @@
 <?php namespace Voradius\Entity;
 
+use Voradius\ClientInterface;
+
+/**
+ * Class Reservation
+ * @package Voradius\Entity
+ */
 class Reservation
 {
-    const SUB_PATH = '/v2/scout';
+    /**
+     *
+     */
+    const PATH = '/v2/scout';
 
-    var $client = null;
+    /**
+     * @var ClientInterface
+     */
+    var $client;
 
     /**
      * Product constructor.
      */
-    public function __construct(Client $client)
+    public function __construct(ClientInterface $client)
     {
         $this->client = $client;
     }
 
-    public function addReservation($first_name, $last_name, $email, $shop_id, $product_id, $phonenumber, $product_request_id = null) {
+    /**
+     * @param $first_name
+     * @param $last_name
+     * @param $email
+     * @param $shop_id
+     * @param $product_id
+     * @param $phonenumber
+     * @param null $product_request_id
+     * @return bool
+     */
+    public function addReservation($first_name, $last_name, $email, $shop_id, $product_id, $phonenumber, $product_request_id = null)
+    {
         $form_params = array(
             'firstname' => $first_name,
             'lastname' => $last_name,
@@ -24,9 +47,7 @@ class Reservation
             'phone' => $phonenumber
         );
 
-        $this->client->connectFrontend();
-
-        $response = $this->client->connection()->post(
+        $response = $this->client->getConnection()->post(
             '/product/iframe?shop_id='.$shop_id.'&product_id='.$product_id.'&product_request_id='.$product_request_id,
             ['body' => $form_params]
         );

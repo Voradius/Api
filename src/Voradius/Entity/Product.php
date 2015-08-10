@@ -1,31 +1,43 @@
 <?php namespace Voradius\Entity;
 
+use Voradius\ClientInterface;
+use Voradius\Exceptions\InvalidParameterException;
+
+/**
+ * Class Product
+ * @package Voradius\Entity
+ */
 class Product {
 
-    const SUB_PATH = '/v2/products';
+    /**
+     *
+     */
+    const PATH = '/v2/products';
 
-    var $client = null;
+    /**
+     * @var ClientInterface
+     */
+    var $client;
 
     /**
      * Product constructor.
      */
-    public function __construct(Client $client)
+    public function __construct(ClientInterface $client)
     {
         $this->client = $client;
     }
-
 
     /**
      * Find a product based on its ID
      *
      * @param int $id
      */
-    public function getProductById($id = null) {
-        if ($id == null) {
-            die("Please provide a product ID".PHP_EOL);
+    public function getById($id = null) {
+        if($id === null) {
+            throw new InvalidParameterException('No ID supplied');
         }
 
-        $response = $this->client->connection()->get(self::SUB_PATH.'/'.$id);
+        $response = $this->client->getConnection()->get(self::PATH . '/' . $id);
         return $response->getBody()->getContents();
     }
 
@@ -34,22 +46,14 @@ class Product {
      *
      * @param string $ean
      */
-    public function getProductByEan($ean = null) {
-        if ($ean == null) {
-            die("Please provide a product EAN".PHP_EOL);
+    public function getByEan($ean = null) {
+        if($ean === null) {
+            throw new InvalidParameterException('No EAN supplied');
         }
 
-        $response = $this->client->connection()->get(self::SUB_PATH.'/ean/'.$ean);
+        $response = $this->client->getConnection()->get(self::PATH . '/ean/' . $ean);
         return $response->getBody()->getContents();
     }
 
-    public function getProductCategories($id = null) {
-        if ($id == null) {
-            die("Please provide a product ID".PHP_EOL);
-        }
-
-        $response = $this->client->connection()->get(self::SUB_PATH.'/categories/'.$id);
-        return $response->getBody()->getContents();
-    }
 
 }

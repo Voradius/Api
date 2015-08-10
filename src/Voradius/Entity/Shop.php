@@ -1,33 +1,54 @@
 <?php namespace Voradius\Entity;
+use Voradius\ClientInterface;
+use Voradius\Exceptions\InvalidParameterException;
 
+/**
+ * Class Shop
+ * @package Voradius\Entity
+ */
 class Shop
 {
-    const SUB_PATH = '/v2/shops';
-    private $client = null;
+    /**
+     *
+     */
+    const PATH = '/v2/shops';
+
+    /**
+     * @var null|Client
+     */
+    private $client;
 
     /**
      * Product constructor.
      */
-    public function __construct(Client $client)
+    public function __construct(ClientInterface $client)
     {
         $this->client = $client;
     }
 
-    public function getShopById($id = null) {
-        if ($id == null) {
-            die("Please provide a shop ID".PHP_EOL);
+    /**
+     * @param null $id
+     * @return mixed
+     */
+    public function getById($id = null) {
+        if ($id === null) {
+            throw new InvalidParameterException('Invalid shop id given');
         }
 
-        $response = $this->client->connection()->get(self::SUB_PATH.'/'.$id);
+        $response = $this->client->getConnection()->get(self::PATH . '/' . $id);
         return $response->getBody()->getContents();
     }
 
-    public function getShopByUniqueId($id = null) {
-        if ($id == null) {
-            die("Please provide a unique ID".PHP_EOL);
+    /**
+     * @param null $id
+     * @return mixed
+     */
+    public function getByUniqueId($id = null) {
+        if ($id === null) {
+            throw new InvalidParameterException('Invalid unique id given');
         }
 
-        $response = $this->client->connection()->get(self::SUB_PATH.'/unique/'.$id);
+        $response = $this->client->getConnection()->get(self::PATH . '/unique/' . $id);
         return $response->getBody()->getContents();
     }
 }
