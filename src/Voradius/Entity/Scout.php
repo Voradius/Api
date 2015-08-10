@@ -29,21 +29,6 @@ class Scout implements EntityInterface
     }
 
     /**
-     * Find a product based on its ID
-     *
-     * @param int $id
-     */
-    public function getShops($category_id = null, $location = 'Amsterdam')
-    {
-        if($category_id === null) {
-            throw new InvalidParameterException('Invalid category ID supplied');
-        }
-
-        $response = $this->client->getConnection()->get('/v2/shops/search?category='.$category_id.'&location='.htmlentities($location).'&range=2&size=200&scout=1');
-        return $response->getBody()->getContents();
-    }
-
-    /**
      * Create a new scout request
      *
      * @param string $first_name

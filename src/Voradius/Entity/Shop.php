@@ -27,8 +27,27 @@ class Shop implements EntityInterface
     }
 
     /**
+     * Find a shop based on Category ID and optional Location
+     *
+     * @param null $category_id
+     * @param string $location
+     * @return mixed
+     * @throws InvalidParameterException
+     */
+    public function getByCategoryId($category_id = null, $location = 'Amsterdam')
+    {
+        if($category_id === null) {
+            throw new InvalidParameterException('Invalid category ID supplied');
+        }
+
+        $response = $this->client->getConnection()->get('/v2/shops/search?category='.$category_id.'&location='.htmlentities($location).'&range=2&size=200&scout=1');
+        return $response->getBody()->getContents();
+    }
+
+    /**
      * @param null $id
      * @return mixed
+     * @throws InvalidParameterException
      */
     public function getById($id = null) {
         if ($id === null) {
@@ -42,6 +61,7 @@ class Shop implements EntityInterface
     /**
      * @param null $id
      * @return mixed
+     * @throws InvalidParameterException
      */
     public function getByUniqueId($id = null) {
         if ($id === null) {
