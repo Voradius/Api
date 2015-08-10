@@ -6,7 +6,7 @@ use Voradius\Exceptions\InvalidParameterException;
  * Class Shop
  * @package Voradius\Entity
  */
-class Shop
+class Shop implements EntityInterface
 {
     /**
      *
@@ -14,7 +14,7 @@ class Shop
     const PATH = '/v2/shops';
 
     /**
-     * @var null|Client
+     * @var ClientInterface
      */
     private $client;
 

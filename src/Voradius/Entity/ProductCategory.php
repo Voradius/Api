@@ -7,7 +7,8 @@ use Voradius\Exceptions\InvalidParameterException;
  * Class ProductCategory
  * @package Voradius\Entity
  */
-class ProductCategory {
+class ProductCategory implements EntityInterface
+{
 
     /**
      *

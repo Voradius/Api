@@ -6,7 +6,7 @@ use Voradius\ClientInterface;
  * Class Reservation
  * @package Voradius\Entity
  */
-class Reservation
+class Reservation implements EntityInterface
 {
     /**
      *

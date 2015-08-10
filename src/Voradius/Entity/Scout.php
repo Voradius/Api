@@ -7,10 +7,18 @@ use Voradius\Exceptions\InvalidParameterException;
  * Class Scout
  * @package Voradius\Entity
  */
-class Scout {
+class Scout implements EntityInterface
+{
+
+    /**
+     *
+     */
     const PATH = '/v2/scout';
 
-    var $client = null;
+    /**
+     * @var ClientInterface
+     */
+    var $client;
 
     /**
      * Product constructor.
