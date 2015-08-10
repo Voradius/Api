@@ -30,7 +30,7 @@ class Shop
             die("Please provide a unique ID".PHP_EOL);
         }
 
-        $response = $this->client->connection()->get(self::SUB_PATH.'/unique/'.$id);
+        $response = $this->client->connection()->get(self::SUB_PATH.'/unique?id='.$id);
         return $response->getBody()->getContents();
     }
 }
