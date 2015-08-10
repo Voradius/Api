@@ -1,23 +1,32 @@
 <?php
 
-class HelperTest extends PHPUnit_Framework_TestCase
+class ProductEntityTest extends PHPUnit_Framework_TestCase
 {
 
-    public function testUrlBuild() {
-        $url = \Voradius\Helpers\Url::build('v2/products', 'search', ['location' => 'Amsterdam', 'size' => 50]);
-        $this->assertEquals('v2/products/search?location=Amsterdam&size=50', $url);
+    private static function getCorrectClient() {
+        $client = new \Voradius\Client('api-key');
+        return new \Voradius\Entity\Product($client);
+    }
 
-        $url = \Voradius\Helpers\Url::build('v2/products/', 'search', ['location' => 'Amsterdam', 'size' => 50]);
-        $this->assertEquals('v2/products/search?location=Amsterdam&size=50', $url);
+    public function testUrlBuildId() {
+        $product = self::getCorrectClient();
 
-        $url = \Voradius\Helpers\Url::build('v2/products', '/search', ['location' => 'Amsterdam', 'size' => 50]);
-        $this->assertEquals('v2/products/search?location=Amsterdam&size=50', $url);
+        $this->setExpectedException('\\Voradius\\Exceptions\\InvalidParameterException');
+        $product->getById();
+    }
 
-        $url = \Voradius\Helpers\Url::build('v2/products', '', ['location' => 'Amsterdam', 'size' => 50]);
-        $this->assertEquals('v2/products?location=Amsterdam&size=50', $url);
+    public function testUrlBuildEan() {
+        $product = self::getCorrectClient();
 
-        $url = \Voradius\Helpers\Url::build('v2/products', 'search');
-        $this->assertEquals('v2/products/search', $url);
+        $this->setExpectedException('\\Voradius\\Exceptions\\InvalidParameterException');
+        $product->getByEan();
+    }
+
+    public function testUrlBuildSearch() {
+        $product = self::getCorrectClient();
+
+        $this->setExpectedException('\\Voradius\\Exceptions\\ParameterNotAllowedException');
+        $product->getSearch(['test' => 1]);
     }
 
 }
