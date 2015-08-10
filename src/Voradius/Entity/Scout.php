@@ -1,6 +1,4 @@
-<?php
-
-namespace Voradius;
+<?php namespace Voradius\Entity;
 
 use GuzzleHttp\Exception\RequestException;
 

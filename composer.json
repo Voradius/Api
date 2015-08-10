@@ -5,6 +5,10 @@
         {
             "name": "Maikel Brouwer",
             "email": "maikel@voradius.com"
+        },
+        {
+            "name": "Stefan Doorn",
+            "email": "stefan@voradius.com"
         }
     ],
     "minimum-stability": "dev",
@@ -14,8 +18,8 @@
     }
     ,
     "autoload": {
-        "psr-0": {
-          "Voradius": "src/"
+        "psr-4": {
+          "Voradius\\": "src/"
         }
     }
 }

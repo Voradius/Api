@@ -1,12 +1,9 @@
-<?php
-
-namespace Voradius;
+<?php namespace Voradius\Entity;
 
 class Shop
 {
     const SUB_PATH = '/v2/shops';
-
-    var $client = null;
+    private $client = null;
 
     /**
      * Product constructor.

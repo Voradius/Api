@@ -1,5 +1,4 @@
-<?php
-namespace Voradius;
+<?php namespace Voradius;
 
 use Voradius\Product;
 

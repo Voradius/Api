@@ -1,8 +1,7 @@
-<?php
-
-namespace Voradius;
+<?php namespace Voradius\Entity;
 
 class Product {
+
     const SUB_PATH = '/v2/products';
 
     var $client = null;
