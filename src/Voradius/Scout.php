@@ -28,7 +28,7 @@ class Scout {
             die("Please provide a category ID".PHP_EOL);
         }
 
-        $response = $this->client->connection()->get('/v2/shops/search?category='.$category_id.'&location='.htmlentities($location).'&range=5&size=200&scout=1');
+        $response = $this->client->connection()->get('/v2/shops/search?category='.$category_id.'&location='.htmlentities($location).'&range=2&size=200&scout=1');
         return $response->getBody()->getContents();
     }
 
@@ -43,14 +43,16 @@ class Scout {
      * @param string $source
      * @return int
      */
-    public function addRequest($first_name, $last_name, $email, $location, $product_id, $source='website') {
+    public function addRequest($first_name, $last_name, $email, $location, $product_id, $unique_id, $phonenumber, $source='website') {
         $form_params = array(
             'firstname' => $first_name,
             'lastname' => $last_name,
             'email' => $email,
             'location' => $location,
             'product_id' => $product_id,
-            'source' => $source
+            'unique_id' => $unique_id,
+            'source' => $source,
+            'phonenumber' => $phonenumber
         );
 
         $this->client->connectFrontend();
@@ -63,6 +65,30 @@ class Scout {
         if ($response->getStatusCode() == 200) {
             $body = json_decode($response->getBody()->getContents());
             return (int) $body->id;
+        } else {
+            return false;
+        }
+    }
+
+    public function retailerReply($id, $unique, array $data) {
+        $whitelist = ['in_assortment', 'in_stock', 'has_alternative', 'can_order', 'price', 'comment'];
+        foreach($data as $key => $value) {
+            if(!in_array($key, $whitelist)) {
+                unset($data[$key]);
+            }
+        }
+
+        if(empty($data)) {
+            return false;
+        }
+
+        $response = $this->client->connection()->post(
+            '/v2/productrequests/retailer-reply/' . $id . '/' . $unique,
+            ['body' => json_encode($data)]
+        );
+
+        if ($response->getStatusCode() == 200) {
+            return true;
         } else {
             return false;
         }
