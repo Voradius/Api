@@ -2,6 +2,7 @@
 
 use Voradius\ClientInterface;
 use Voradius\Exceptions\InvalidParameterException;
+use Voradius\Helpers\Url;
 
 /**
  * Class ProductCategory
@@ -33,7 +34,7 @@ class ProductCategory implements EntityInterface
             throw new InvalidParameterException('No product ID supplied');
         }
 
-        $response = $this->client->getConnection()->get(self::PATH . '/categories/' . $id);
+        $response = $this->client->getConnection()->get(Url::build(self::PATH, '/categories/' . $id));
         return $response->getBody()->getContents();
     }
 

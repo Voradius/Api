@@ -2,6 +2,7 @@
 
 use Voradius\ClientInterface;
 use Voradius\Exceptions\InvalidParameterException;
+use Voradius\Helpers\Url;
 
 /**
  * Class Product
@@ -38,7 +39,7 @@ class Product implements EntityInterface
             throw new InvalidParameterException('No ID supplied');
         }
 
-        $response = $this->client->getConnection()->get(self::PATH . '/' . $id);
+        $response = $this->client->getConnection()->get(Url::build(self::PATH, $id));
         return $response->getBody()->getContents();
     }
 
@@ -52,7 +53,7 @@ class Product implements EntityInterface
             throw new InvalidParameterException('No EAN supplied');
         }
 
-        $response = $this->client->getConnection()->get(self::PATH . '/ean/' . $ean);
+        $response = $this->client->getConnection()->get(Url::build(self::PATH, '/ean/' . $ean));
         return $response->getBody()->getContents();
     }
 

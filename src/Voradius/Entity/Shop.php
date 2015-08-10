@@ -1,6 +1,7 @@
 <?php namespace Voradius\Entity;
 use Voradius\ClientInterface;
 use Voradius\Exceptions\InvalidParameterException;
+use Voradius\Helpers\Url;
 
 /**
  * Class Shop
@@ -40,7 +41,8 @@ class Shop implements EntityInterface
             throw new InvalidParameterException('Invalid category ID supplied');
         }
 
-        $response = $this->client->getConnection()->get('/v2/shops/search?category='.$category_id.'&location='.htmlentities($location).'&range=2&size=200&scout=1');
+        $response = $this->client->getConnection()->get(Url::build(self::PATH, 'search', [
+            'category' => $category_id, 'location' => $location, 'range' => 2, 'size' => 200, 'scout' => 1]));
         return $response->getBody()->getContents();
     }
 
@@ -54,7 +56,7 @@ class Shop implements EntityInterface
             throw new InvalidParameterException('Invalid shop id given');
         }
 
-        $response = $this->client->getConnection()->get(self::PATH . '/' . $id);
+        $response = $this->client->getConnection()->get(Url::build(self::PATH, $id));
         return $response->getBody()->getContents();
     }
 
@@ -68,7 +70,7 @@ class Shop implements EntityInterface
             throw new InvalidParameterException('Invalid unique id given');
         }
 
-        $response = $this->client->getConnection()->get(self::PATH . '/unique?id=' . $id);
+        $response = $this->client->getConnection()->get(Url::build(self::PATH, 'unique', ['id' => $id]));
         return $response->getBody()->getContents();
     }
 }

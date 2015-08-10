@@ -1,6 +1,7 @@
 <?php namespace Voradius\Entity;
 
 use Voradius\ClientInterface;
+use Voradius\Helpers\Url;
 
 /**
  * Class Reservation
@@ -48,7 +49,10 @@ class Reservation implements EntityInterface
         );
 
         $response = $this->client->getConnection()->post(
-            '/product/iframe?shop_id='.$shop_id.'&product_id='.$product_id.'&product_request_id='.$product_request_id,
+            Url::build('/product/iframe', '', [
+                'shop_id' => $shop_id,
+                'product_id' => $product_id,
+                'product_request_id' => $product_request_id]),
             ['body' => $form_params]
         );
 

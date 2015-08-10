@@ -2,6 +2,7 @@
 
 use Voradius\ClientInterface;
 use Voradius\Exceptions\InvalidParameterException;
+use Voradius\Helpers\Url;
 
 /**
  * Class Scout
@@ -52,7 +53,7 @@ class Scout implements EntityInterface
         );
 
         $response = $this->client->getConnection()->post(
-            '/product-request/create',
+            Url::build('/product-request/create'),
             ['body' => $form_params]
         );
         
@@ -83,7 +84,7 @@ class Scout implements EntityInterface
         }
 
         $response = $this->client->getConnection()->post(
-            '/v2/productrequests/retailer-reply/' . $id . '/' . $unique,
+            Url::build('/v2/productrequests/retailer-reply', $id . '/' . $unique),
             ['body' => json_encode($data)]
         );
 
@@ -105,7 +106,7 @@ class Scout implements EntityInterface
             throw new InvalidParameterException('No request ID supplied');
         }
 
-        $response = $this->client->getConnection()->get(self::PATH . '/' . $id);
+        $response = $this->client->getConnection()->get(Url::build(self::PATH, $id));
         return $response->getBody()->getContents();
     }
 
@@ -120,7 +121,7 @@ class Scout implements EntityInterface
             throw new InvalidParameterException('No request ID supplied');
         }
 
-        $response = $this->client->getConnection()->get(self::PATH . '/' . $id . '/detail');
+        $response = $this->client->getConnection()->get(Url::build(self::PATH, $id . '/detail'));
         return $response->getBody()->getContents();
     }
 }
