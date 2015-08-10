@@ -29,7 +29,7 @@ add the following lines to your ``composer.json`` file.
 }
 ```
 
-<a name="General"></a>
+<a name="general"></a>
 ## General example
 
 All Entity classes need a Client object supplied on creating an object, with both the API Key and Environment supplied, as below.
