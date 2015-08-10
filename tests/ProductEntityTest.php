@@ -29,4 +29,11 @@ class ProductEntityTest extends PHPUnit_Framework_TestCase
         $product->getSearch(['test' => 1]);
     }
 
+    public function testUrlBuildSearchEmpty() {
+        $product = self::getCorrectClient();
+
+        $this->setExpectedException('\\Voradius\\Exceptions\\InvalidParameterException');
+        $product->getSearch([]);
+    }
+
 }
