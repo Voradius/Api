@@ -87,7 +87,7 @@ class Client implements ClientInterface
             ]
         ];
 
-        return $urls[$env][$part];
+        return $urls[ $env ][ $part ];
     }
 
     /**
