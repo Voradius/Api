@@ -20,7 +20,7 @@ class Product extends AbstractEntity implements EntityInterface
     /**
      * @var array
      */
-    private $searchWhitelist = ['term', 'sort', 'order', 'category_id', 'lat', 'long', 'shop_id'];
+    private $searchWhitelist = [ 'term', 'sort', 'order', 'category_id', 'lat', 'long', 'shop_id' ];
 
     /**
      * @var ClientInterface
@@ -66,17 +66,17 @@ class Product extends AbstractEntity implements EntityInterface
      * @throws ParameterNotAllowedException
      */
     public function getSearch(array $params) {
-        if(empty($params)) {
+        if (empty($params)) {
             throw new InvalidParameterException('Atleast one parameter is required. Choose from: ' . implode(', ', array_keys($this->searchWhitelist)));
         }
 
-        foreach($params as $key => $value) {
-            if(!in_array($key, $this->searchWhitelist)) {
+        foreach ($params as $key => $value) {
+            if (!in_array($key, $this->searchWhitelist)) {
                 throw new ParameterNotAllowedException('Parameter "' . $key . '" not allowed');
             }
         }
 
-        if(!array_key_exists('term', $params)) {
+        if (!array_key_exists('term', $params)) {
             throw new InvalidParameterException('Parameter "term" is required');
         }
 

@@ -40,7 +40,7 @@ class Scout extends AbstractEntity implements EntityInterface
      * @param string $source
      * @return int
      */
-    public function addRequest($first_name, $last_name, $email, $location, $product_id, $unique_id, $phonenumber, $source='website') {
+    public function addRequest($first_name, $last_name, $email, $location, $product_id, $unique_id, $phonenumber, $source = 'website') {
         $form_params = array(
             'firstname' => $first_name,
             'lastname' => $last_name,
@@ -54,7 +54,7 @@ class Scout extends AbstractEntity implements EntityInterface
 
         $response = $this->client->getConnection()->post(
             Url::build('/product-request/create'),
-            ['body' => $form_params]
+            [ 'body' => $form_params ]
         );
         
         if ($response->getStatusCode() == 200) {
@@ -72,20 +72,20 @@ class Scout extends AbstractEntity implements EntityInterface
      * @return bool
      */
     public function retailerReply($id, $unique, array $data) {
-        $whitelist = ['in_assortment', 'in_stock', 'has_alternative', 'can_order', 'price', 'comment'];
-        foreach($data as $key => $value) {
-            if(!in_array($key, $whitelist)) {
-                unset($data[$key]);
+        $whitelist = [ 'in_assortment', 'in_stock', 'has_alternative', 'can_order', 'price', 'comment' ];
+        foreach ($data as $key => $value) {
+            if (!in_array($key, $whitelist)) {
+                unset($data[ $key ]);
             }
         }
 
-        if(empty($data)) {
+        if (empty($data)) {
             return false;
         }
 
         $response = $this->client->getConnection()->post(
             Url::build('/v2/productrequests/retailer-reply', $id . '/' . $unique),
-            ['body' => json_encode($data)]
+            [ 'body' => json_encode($data) ]
         );
 
         if ($response->getStatusCode() == 200) {

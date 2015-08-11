@@ -8,7 +8,7 @@ class ClientApiFactory
         return new \GuzzleHttp\Client([
             'base_url' => $url,
             'defaults' => [
-                'headers' => ['X-API-KEY' => $api_key]
+                'headers' => [ 'X-API-KEY' => $api_key ]
             ]
         ]);
     }
