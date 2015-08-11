@@ -15,7 +15,7 @@ class Url
      */
     public static function build($base, $path = '', array $params = array()) {
         // Add path to base (with leading slash if missing)
-        if(!empty($path)) {
+        if (!empty($path)) {
             if (strpos($path, '/') !== 0 && substr($base, -1) !== '/') {
                 $base .= '/';
             }
@@ -24,7 +24,7 @@ class Url
         }
 
         // Add parameters
-        if(!empty($params)) {
+        if (!empty($params)) {
             $base .= '?' . http_build_query($params);
         }
 

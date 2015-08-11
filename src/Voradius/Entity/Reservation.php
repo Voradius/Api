@@ -52,8 +52,8 @@ class Reservation extends AbstractEntity implements EntityInterface
             Url::build('/product/iframe', '', [
                 'shop_id' => $shop_id,
                 'product_id' => $product_id,
-                'product_request_id' => $product_request_id]),
-            ['body' => $form_params]
+                'product_request_id' => $product_request_id ]),
+            [ 'body' => $form_params ]
         );
 
         if ($response->getStatusCode() == 200) {
