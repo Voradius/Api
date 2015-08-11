@@ -71,7 +71,7 @@ class Product implements EntityInterface
      */
     public function getSearch(array $params) {
         if(empty($params)) {
-            throw new InvalidParameterException('Atleast one parameter is required. Choose from: ' . array_keys($this->searchWhitelist));
+            throw new InvalidParameterException('Atleast one parameter is required. Choose from: ' . implode(', ', array_keys($this->searchWhitelist)));
         }
 
         foreach($params as $key => $value) {
