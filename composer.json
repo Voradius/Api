@@ -5,17 +5,23 @@
         {
             "name": "Maikel Brouwer",
             "email": "maikel@voradius.com"
+        },
+        {
+            "name": "Stefan Doorn",
+            "email": "stefan@voradius.com"
         }
     ],
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.4.0",
         "guzzlehttp/guzzle": "5.3"
-    }
-    ,
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8.*"
+    },
     "autoload": {
-        "psr-0": {
-          "Voradius": "src/"
+        "psr-4": {
+          "Voradius\\": "src/Voradius"
         }
     }
 }

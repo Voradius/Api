@@ -1,35 +1,32 @@
-<?php
+<?php namespace Voradius\Entity;
 
-namespace Voradius;
+use Voradius\ClientInterface;
+use Voradius\Exceptions\InvalidParameterException;
+use Voradius\Helpers\Url;
 
-use GuzzleHttp\Exception\RequestException;
+/**
+ * Class Scout
+ * @package Voradius\Entity
+ */
+class Scout implements EntityInterface
+{
 
-class Scout {
-    const SUB_PATH = '/v2/scout';
+    /**
+     *
+     */
+    const PATH = '/v2/scout';
 
-    var $client = null;
+    /**
+     * @var ClientInterface
+     */
+    var $client;
 
     /**
      * Product constructor.
      */
-    public function __construct(Client $client)
+    public function __construct(ClientInterface $client)
     {
         $this->client = $client;
-    }
-
-
-    /**
-     * Find a product based on its ID
-     *
-     * @param int $id
-     */
-    public function getShops($category_id = null, $location = 'Amsterdam') {
-        if ($category_id == null) {
-            die("Please provide a category ID".PHP_EOL);
-        }
-
-        $response = $this->client->connection()->get('/v2/shops/search?category='.$category_id.'&location='.htmlentities($location).'&range=2&size=200&scout=1');
-        return $response->getBody()->getContents();
     }
 
     /**
@@ -55,10 +52,8 @@ class Scout {
             'phonenumber' => $phonenumber
         );
 
-        $this->client->connectFrontend();
-
-        $response = $this->client->connection()->post(
-            '/product-request/create',
+        $response = $this->client->getConnection()->post(
+            Url::build('/product-request/create'),
             ['body' => $form_params]
         );
         
@@ -70,6 +65,12 @@ class Scout {
         }
     }
 
+    /**
+     * @param $id
+     * @param $unique
+     * @param array $data
+     * @return bool
+     */
     public function retailerReply($id, $unique, array $data) {
         $whitelist = ['in_assortment', 'in_stock', 'has_alternative', 'can_order', 'price', 'comment'];
         foreach($data as $key => $value) {
@@ -82,8 +83,8 @@ class Scout {
             return false;
         }
 
-        $response = $this->client->connection()->post(
-            '/v2/productrequests/retailer-reply/' . $id . '/' . $unique,
+        $response = $this->client->getConnection()->post(
+            Url::build('/v2/productrequests/retailer-reply', $id . '/' . $unique),
             ['body' => json_encode($data)]
         );
 
@@ -101,11 +102,11 @@ class Scout {
      * @return string JSON response
      */
     public function getRequest($id = null) {
-        if ($id == null) {
-            die("Please provide a request ID".PHP_EOL);
+        if($id === null) {
+            throw new InvalidParameterException('No request ID supplied');
         }
 
-        $response = $this->client->connection()->get(self::SUB_PATH.'/'.$id);
+        $response = $this->client->getConnection()->get(Url::build(self::PATH, $id));
         return $response->getBody()->getContents();
     }
 
@@ -116,11 +117,11 @@ class Scout {
      * @return string JSON response of request details
      */
     public function getRequestDetail($id = null) {
-        if ($id == null) {
-            die("Please provide a request ID".PHP_EOL);
+        if($id === null) {
+            throw new InvalidParameterException('No request ID supplied');
         }
 
-        $response = $this->client->connection()->get(self::SUB_PATH.'/'.$id.'/detail');
+        $response = $this->client->getConnection()->get(Url::build(self::PATH, $id . '/detail'));
         return $response->getBody()->getContents();
     }
 }

@@ -1,57 +1,80 @@
-<?php
-namespace Voradius;
+<?php namespace Voradius;
 
+use Voradius\Exceptions\InvalidParameterException;
+use Voradius\Exceptions\ParameterNotAllowedException;
 use Voradius\Product;
 
-class Client {
+class Client implements ClientInterface
+{
+
+    /**
+     * Environments
+     */
     const LIVE = 1;
     const LOCAL = 2;
     const SANDBOX = 3;
     const STAGING = 4;
 
-    var $_api_key;
-    var $_env;
+    /**
+     * Parts
+     *
+     * Defaults to API
+     */
+    const PART_API = 1;
+    const PART_FRONTEND = 2;
 
+    /**
+     * @var null
+     */
+    private $_api_key;
+
+    /**
+     * @var int
+     */
+    private $_env;
+
+    /**
+     * @var null
+     */
     private $_connection = null;
 
     /**
-     * ApiController constructor.
+     * Client to use in several entities
+     *
+     * @param null $api_key
+     * @param int $env
      */
-    public function __construct($api_key = null, $env = self::LIVE)
+    public function __construct($api_key = null, $env = self::LIVE, $part = self::PART_API)
     {
-        if ($api_key == null) {
-            echo ("** Supply your API key for access to the API **").PHP_EOL;
-            die();
+        if($api_key === null) {
+            throw new InvalidParameterException('API Key cannot be null');
         }
 
-        $this->_api_key = $api_key;
-        $this->_env = $env;
+        if(!in_array($env, [self::LOCAL, self::LIVE, self::SANDBOX, self::STAGING])) {
+            throw new ParameterNotAllowedException('Unknown environment');
+        }
 
-        $this->connectAPI($api_key);
+        if(!in_array($part, [self::PART_API, self::PART_FRONTEND])) {
+            throw new ParameterNotAllowedException('Unknown part');
+        }
+
+        $this->setApiKey($api_key);
+        $this->setEnv($env);
+
+        switch($part)
+        {
+            case 1:
+                $this->_connection = ClientApiFactory::newInstance($this->getApiUrl(), $this->getApiKey());
+                break;
+            case 2:
+                $this->_connection = ClientFrontendFactory::newInstance($this->getFrontendUrl(), $this->getApiKey());
+                break;
+        }
     }
 
-    public function connection() {
-        return $this->_connection;
-    }
-
-    public function connectAPI($api_key) {
-        $this->_connection = new \GuzzleHttp\Client([
-            'base_url' => $this->getApiUrl(),
-            'defaults' => [
-                'headers' => ['X-API-KEY' => $api_key]
-            ]
-        ]);
-    }
-
-    public function connectFrontend() {
-        $this->_connection = new \GuzzleHttp\Client([
-            'base_url' => $this->getFrontendUrl(),
-            'defaults' => [
-                'headers' => ['X-API-KEY' => $this->_api_key]
-            ]
-        ]);
-    }
-
+    /**
+     * @return string
+     */
     private function getApiUrl() {
         switch ($this->_env) {
             case self::LOCAL:
@@ -61,10 +84,14 @@ class Client {
             case self::SANDBOX:
                 return 'http://sandbox.api.voradius.nl';break;
             case self::LIVE:
+            default:
                 return 'http://api.voradius.nl';break;
         }
     }
 
+    /**
+     * @return string
+     */
     private function getFrontendUrl() {
         switch ($this->_env) {
             case self::LOCAL:
@@ -74,7 +101,62 @@ class Client {
             case self::SANDBOX:
                 return 'http://sandbox.voradius.nl';break;
             case self::LIVE:
+            default:
                 return 'http://www.voradius.nl';break;
         }
+    }
+
+    /**
+     * @return null
+     */
+    public function getApiKey()
+    {
+        return $this->_api_key;
+    }
+
+    /**
+     * @param null $api_key
+     * @return Client
+     */
+    public function setApiKey($api_key)
+    {
+        $this->_api_key = $api_key;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getEnv()
+    {
+        return $this->_env;
+    }
+
+    /**
+     * @param int $env
+     * @return Client
+     */
+    public function setEnv($env)
+    {
+        $this->_env = $env;
+        return $this;
+    }
+
+    /**
+     * @return null
+     */
+    public function getConnection()
+    {
+        return $this->_connection;
+    }
+
+    /**
+     * @param null $connection
+     * @return Client
+     */
+    public function setConnection($connection)
+    {
+        $this->_connection = $connection;
+        return $this;
     }
 }
