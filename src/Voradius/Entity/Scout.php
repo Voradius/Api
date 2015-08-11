@@ -57,12 +57,12 @@ class Scout extends AbstractEntity implements EntityInterface
             [ 'body' => $form_params ]
         );
         
-        if ($response->getStatusCode() == 200) {
+        if ($response->getStatusCode() === 200) {
             $body = json_decode($response->getBody()->getContents());
             return (int) $body->id;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -88,11 +88,11 @@ class Scout extends AbstractEntity implements EntityInterface
             [ 'body' => json_encode($data) ]
         );
 
-        if ($response->getStatusCode() == 200) {
+        if ($response->getStatusCode() === 200) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

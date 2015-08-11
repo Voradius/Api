@@ -56,10 +56,10 @@ class Reservation extends AbstractEntity implements EntityInterface
             [ 'body' => $form_params ]
         );
 
-        if ($response->getStatusCode() == 200) {
+        if ($response->getStatusCode() === 200) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 }
