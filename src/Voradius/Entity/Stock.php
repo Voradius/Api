@@ -19,7 +19,7 @@ class Stock implements EntityInterface
     /**
      * @var ClientInterface
      */
-    var $client;
+    private $client;
 
     /**
      * Product constructor.
