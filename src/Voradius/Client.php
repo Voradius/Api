@@ -34,9 +34,9 @@ class Client implements ClientInterface
     private $_env;
 
     /**
-     * @var null
+     * @var \GuzzleHttp\Client
      */
-    private $_connection = null;
+    private $_connection;
 
     /**
      * Client to use in several entities
