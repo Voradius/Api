@@ -3,7 +3,7 @@
 interface ClientInterface
 {
 
-    function __construct($api_key = null, $env, $part);
+    function __construct($api_key, $env, $part);
     function getConnection();
 
 }
