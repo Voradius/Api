@@ -1,3 +1,6 @@
+[![Build Status](https://api.travis-ci.org/Voradius/Api.svg?branch=master)](https://travis-ci.org/Voradius/Api)
+[![Latest Stable Version](http://img.shields.io/packagist/v/voradius/api.svg?style=flat)](https://packagist.org/packages/voradius/api)
+
 # Voradius API
 
 This library is aimed at wrapping the Voradius API in a simple package. 
