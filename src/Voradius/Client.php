@@ -76,16 +76,15 @@ class Client implements ClientInterface
      * @return string
      */
     private function getApiUrl() {
-        switch ($this->_env) {
+        switch ($this->getEnv()) {
             case self::LOCAL:
-                return 'http://api.voradius.vagrant';break;
+                return 'http://api.voradius.vagrant';
             case self::STAGING:
-                return 'http://staging.api.voradius.nl';break;
+                return 'http://staging.api.voradius.nl';
             case self::SANDBOX:
-                return 'http://sandbox.api.voradius.nl';break;
+                return 'http://sandbox.api.voradius.nl';
             case self::LIVE:
-            default:
-                return 'http://api.voradius.nl';break;
+                return 'http://api.voradius.nl';
         }
     }
 
@@ -93,16 +92,15 @@ class Client implements ClientInterface
      * @return string
      */
     private function getFrontendUrl() {
-        switch ($this->_env) {
+        switch ($this->getEnv()) {
             case self::LOCAL:
-                return 'http://frontend.voradius.vagrant';break;
+                return 'http://frontend.voradius.vagrant';
             case self::STAGING:
-                return 'http://staging.voradius.nl';break;
+                return 'http://staging.voradius.nl';
             case self::SANDBOX:
-                return 'http://sandbox.voradius.nl';break;
+                return 'http://sandbox.voradius.nl';
             case self::LIVE:
-            default:
-                return 'http://www.voradius.nl';break;
+                return 'http://www.voradius.nl';
         }
     }
 
