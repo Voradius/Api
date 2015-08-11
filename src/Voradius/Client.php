@@ -61,47 +61,34 @@ class Client implements ClientInterface
         $this->setApiKey($api_key);
         $this->setEnv($env);
 
-        switch($part)
-        {
-            case 1:
-                $this->_connection = ClientApiFactory::newInstance($this->getApiUrl(), $this->getApiKey());
-                break;
-            case 2:
-                $this->_connection = ClientFrontendFactory::newInstance($this->getFrontendUrl(), $this->getApiKey());
-                break;
-        }
+        $this->_connection = ClientApiFactory::newInstance($this->getUrl($this->getEnv(), $part), $this->getApiKey());
     }
 
     /**
      * @return string
      */
-    private function getApiUrl() {
-        switch ($this->getEnv()) {
-            case self::LOCAL:
-                return 'http://api.voradius.vagrant';
-            case self::STAGING:
-                return 'http://staging.api.voradius.nl';
-            case self::SANDBOX:
-                return 'http://sandbox.api.voradius.nl';
-            case self::LIVE:
-                return 'http://api.voradius.nl';
-        }
-    }
+    private function getUrl($env, $part)
+    {
+        $urls = [
+            self::LOCAL => [
+                self::PART_FRONTEND => 'http://frontend.voradius.vagrant',
+                self::PART_API => 'http://api.voradius.vagrant'
+            ],
+            self::STAGING => [
+                self::PART_FRONTEND => 'http://staging.voradius.nl',
+                self::PART_API => 'http://staging.api.voradius.nl'
+            ],
+            self::SANDBOX => [
+                self::PART_FRONTEND => 'http://sandbox.voradius.nl',
+                self::PART_API => 'http://sandbox.api.voradius.nl'
+            ],
+            self::LIVE => [
+                self::PART_FRONTEND => 'http://www.voradius.nl',
+                self::PART_API => 'http://api.voradius.nl'
+            ]
+        ];
 
-    /**
-     * @return string
-     */
-    private function getFrontendUrl() {
-        switch ($this->getEnv()) {
-            case self::LOCAL:
-                return 'http://frontend.voradius.vagrant';
-            case self::STAGING:
-                return 'http://staging.voradius.nl';
-            case self::SANDBOX:
-                return 'http://sandbox.voradius.nl';
-            case self::LIVE:
-                return 'http://www.voradius.nl';
-        }
+        return $urls[$env][$part];
     }
 
     /**
