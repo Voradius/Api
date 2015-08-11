@@ -65,11 +65,7 @@ class Shop extends AbstractEntity implements EntityInterface
             throw new InvalidParameterException('Atleast one parameter is required. Choose from: ' . array_keys($this->searchWhitelist));
         }
 
-        foreach ($params as $key => $value) {
-            if (!in_array($key, $this->searchWhitelist)) {
-                throw new ParameterNotAllowedException('Parameter "' . $key . '" not allowed');
-            }
-        }
+        $this->notWhitelistedParameters($params, $this->searchWhitelist);
 
         $response = $this->client->getConnection()->get(Url::build(self::PATH, 'search', $params));
         return $response->getBody()->getContents();

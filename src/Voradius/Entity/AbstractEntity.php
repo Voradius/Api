@@ -1,6 +1,7 @@
 <?php namespace Voradius\Entity;
 
 use Voradius\Exceptions\InvalidParameterException;
+use Voradius\Exceptions\ParameterNotAllowedException;
 
 /**
  * Class AbstractEntity
@@ -26,4 +27,22 @@ class AbstractEntity
         return true;
     }
 
+    /**
+     * @param array $parameters
+     * @param array $whitelist
+     * @return bool
+     * @throws ParameterNotAllowedException
+     */
+    protected function notWhitelistedParameters(array $parameters, array $whitelist)
+    {
+        foreach ($parameters as $key => $value)
+        {
+            if (!in_array($key, $whitelist))
+            {
+                throw new ParameterNotAllowedException('Parameter "' . $key . '" not allowed');
+            }
+        }
+
+        return true;
+    }
 }

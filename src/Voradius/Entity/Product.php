@@ -70,11 +70,7 @@ class Product extends AbstractEntity implements EntityInterface
             throw new InvalidParameterException('Atleast one parameter is required. Choose from: ' . implode(', ', array_keys($this->searchWhitelist)));
         }
 
-        foreach ($params as $key => $value) {
-            if (!in_array($key, $this->searchWhitelist)) {
-                throw new ParameterNotAllowedException('Parameter "' . $key . '" not allowed');
-            }
-        }
+        $this->notWhitelistedParameters($params, $this->searchWhitelist);
 
         if (!array_key_exists('term', $params)) {
             throw new InvalidParameterException('Parameter "term" is required');

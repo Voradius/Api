@@ -2,7 +2,6 @@
 
 use Voradius\Exceptions\InvalidParameterException;
 use Voradius\Exceptions\ParameterNotAllowedException;
-use Voradius\Product;
 
 class Client implements ClientInterface
 {
@@ -61,7 +60,7 @@ class Client implements ClientInterface
         $this->setApiKey($api_key);
         $this->setEnv($env);
 
-        $this->_connection = ClientApiFactory::newInstance($this->getUrl($this->getEnv(), $part), $this->getApiKey());
+        $this->_connection = ClientFactory::newInstance($this->getUrl($this->getEnv(), $part), $this->getApiKey());
     }
 
     /**

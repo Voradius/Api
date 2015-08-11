@@ -1,6 +1,6 @@
 <?php namespace Voradius;
 
-class ClientApiFactory
+class ClientFactory
 {
 
     public static function newInstance($url, $api_key)
