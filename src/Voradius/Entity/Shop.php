@@ -23,7 +23,7 @@ class Shop extends AbstractEntity implements EntityInterface
     /**
      * @var array
      */
-    private $searchWhitelist = ['phone', 'name', 'street', 'zipcode', 'page', 'location', 'category', 'range'];
+    private $searchWhitelist = [ 'phone', 'name', 'street', 'zipcode', 'page', 'location', 'category', 'range' ];
 
     /**
      * Product constructor.
@@ -50,7 +50,7 @@ class Shop extends AbstractEntity implements EntityInterface
             'location' => $location,
             'range' => 2,
             'size' => 200,
-            'scout' => 1]));
+            'scout' => 1 ]));
         return $response->getBody()->getContents();
     }
 
@@ -61,12 +61,12 @@ class Shop extends AbstractEntity implements EntityInterface
      * @throws ParameterNotAllowedException
      */
     public function getSearch(array $params) {
-        if(empty($params)) {
+        if (empty($params)) {
             throw new InvalidParameterException('Atleast one parameter is required. Choose from: ' . array_keys($this->searchWhitelist));
         }
 
-        foreach($params as $key => $value) {
-            if(!in_array($key, $this->searchWhitelist)) {
+        foreach ($params as $key => $value) {
+            if (!in_array($key, $this->searchWhitelist)) {
                 throw new ParameterNotAllowedException('Parameter "' . $key . '" not allowed');
             }
         }
@@ -95,7 +95,7 @@ class Shop extends AbstractEntity implements EntityInterface
     public function getByUniqueId($id = null) {
         $this->noNullParameters($id);
 
-        $response = $this->client->getConnection()->get(Url::build(self::PATH, 'unique', ['id' => $id]));
+        $response = $this->client->getConnection()->get(Url::build(self::PATH, 'unique', [ 'id' => $id ]));
         return $response->getBody()->getContents();
     }
 }

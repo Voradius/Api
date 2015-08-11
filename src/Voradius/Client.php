@@ -46,22 +46,22 @@ class Client implements ClientInterface
      */
     public function __construct($api_key = null, $env = self::LIVE, $part = self::PART_API)
     {
-        if($api_key === null) {
+        if ($api_key === null) {
             throw new InvalidParameterException('API Key cannot be null');
         }
 
-        if(!in_array($env, [self::LOCAL, self::LIVE, self::SANDBOX, self::STAGING])) {
+        if (!in_array($env, [ self::LOCAL, self::LIVE, self::SANDBOX, self::STAGING ])) {
             throw new ParameterNotAllowedException('Unknown environment');
         }
 
-        if(!in_array($part, [self::PART_API, self::PART_FRONTEND])) {
+        if (!in_array($part, [ self::PART_API, self::PART_FRONTEND ])) {
             throw new ParameterNotAllowedException('Unknown part');
         }
 
         $this->setApiKey($api_key);
         $this->setEnv($env);
 
-        switch($part)
+        switch ($part)
         {
             case 1:
                 $this->_connection = ClientApiFactory::newInstance($this->getApiUrl(), $this->getApiKey());

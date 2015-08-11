@@ -15,9 +15,9 @@ class AbstractEntity
      */
     protected function noNullParameters()
     {
-        foreach(func_get_args() as $param => $arg)
+        foreach (func_get_args() as $param => $arg)
         {
-            if(is_null($arg))
+            if (is_null($arg))
             {
                 throw new InvalidParameterException('Parameter ' . $param . " should be supplied");
             }

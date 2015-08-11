@@ -30,7 +30,7 @@ class ProductCategory extends AbstractEntity implements EntityInterface
     }
 
     public function getByProductId($id = null) {
-        if($id == null) {
+        if ($id == null) {
             throw new InvalidParameterException('No product ID supplied');
         }
 
