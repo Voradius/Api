@@ -9,7 +9,7 @@ use Voradius\Helpers\Url;
  * Class Product
  * @package Voradius\Entity
  */
-class Product implements EntityInterface
+class Product extends AbstractEntity implements EntityInterface
 {
 
     /**
@@ -41,9 +41,7 @@ class Product implements EntityInterface
      * @param int $id
      */
     public function getById($id = null) {
-        if($id === null) {
-            throw new InvalidParameterException('No ID supplied');
-        }
+        $this->noNullParameters($id);
 
         $response = $this->client->getConnection()->get(Url::build(self::PATH, $id));
         return $response->getBody()->getContents();
@@ -55,9 +53,7 @@ class Product implements EntityInterface
      * @param string $ean
      */
     public function getByEan($ean = null) {
-        if($ean === null) {
-            throw new InvalidParameterException('No EAN supplied');
-        }
+        $this->noNullParameters($ean);
 
         $response = $this->client->getConnection()->get(Url::build(self::PATH, '/ean/' . $ean));
         return $response->getBody()->getContents();

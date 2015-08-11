@@ -8,7 +8,7 @@ use Voradius\Helpers\Url;
  * Class ProductCategory
  * @package Voradius\Entity
  */
-class ProductCategory implements EntityInterface
+class ProductCategory extends AbstractEntity implements EntityInterface
 {
 
     /**

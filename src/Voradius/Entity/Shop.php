@@ -8,7 +8,7 @@ use Voradius\Helpers\Url;
  * Class Shop
  * @package Voradius\Entity
  */
-class Shop implements EntityInterface
+class Shop extends AbstractEntity implements EntityInterface
 {
     /**
      *
@@ -43,9 +43,7 @@ class Shop implements EntityInterface
      */
     public function getByCategoryId($category_id = null, $location = 'Amsterdam')
     {
-        if($category_id === null) {
-            throw new InvalidParameterException('Invalid category ID supplied');
-        }
+        $this->noNullParameters($category_id, $location);
 
         $response = $this->client->getConnection()->get(Url::build(self::PATH, 'search', [
             'category' => $category_id,
@@ -83,9 +81,7 @@ class Shop implements EntityInterface
      * @throws InvalidParameterException
      */
     public function getById($id = null) {
-        if ($id === null) {
-            throw new InvalidParameterException('Invalid shop id given');
-        }
+        $this->noNullParameters($id);
 
         $response = $this->client->getConnection()->get(Url::build(self::PATH, $id));
         return $response->getBody()->getContents();
@@ -97,9 +93,7 @@ class Shop implements EntityInterface
      * @throws InvalidParameterException
      */
     public function getByUniqueId($id = null) {
-        if ($id === null) {
-            throw new InvalidParameterException('Invalid unique id given');
-        }
+        $this->noNullParameters($id);
 
         $response = $this->client->getConnection()->get(Url::build(self::PATH, 'unique', ['id' => $id]));
         return $response->getBody()->getContents();

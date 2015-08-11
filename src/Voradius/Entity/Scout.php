@@ -8,7 +8,7 @@ use Voradius\Helpers\Url;
  * Class Scout
  * @package Voradius\Entity
  */
-class Scout implements EntityInterface
+class Scout extends AbstractEntity implements EntityInterface
 {
 
     /**
@@ -102,9 +102,7 @@ class Scout implements EntityInterface
      * @return string JSON response
      */
     public function getRequest($id = null) {
-        if($id === null) {
-            throw new InvalidParameterException('No request ID supplied');
-        }
+        $this->noNullParameters($id);
 
         $response = $this->client->getConnection()->get(Url::build(self::PATH, $id));
         return $response->getBody()->getContents();
@@ -117,9 +115,7 @@ class Scout implements EntityInterface
      * @return string JSON response of request details
      */
     public function getRequestDetail($id = null) {
-        if($id === null) {
-            throw new InvalidParameterException('No request ID supplied');
-        }
+        $this->noNullParameters($id);
 
         $response = $this->client->getConnection()->get(Url::build(self::PATH, $id . '/detail'));
         return $response->getBody()->getContents();

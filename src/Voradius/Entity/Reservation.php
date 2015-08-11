@@ -7,7 +7,7 @@ use Voradius\Helpers\Url;
  * Class Reservation
  * @package Voradius\Entity
  */
-class Reservation implements EntityInterface
+class Reservation extends AbstractEntity implements EntityInterface
 {
     /**
      *
