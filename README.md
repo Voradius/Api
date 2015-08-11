@@ -1,6 +1,6 @@
 [![Build Status](https://api.travis-ci.org/Voradius/Api.svg?branch=master)](https://travis-ci.org/Voradius/Api)
 [![Latest Stable Version](http://img.shields.io/packagist/v/voradius/api.svg?style=flat)](https://packagist.org/packages/voradius/api)
-[![Dependency](https://www.versioneye.com/user/projects/55c9a6cb812cc40017000001/badge.svg?style=flat)(https://www.versioneye.com/user/projects/55c9a6cb812cc40017000001)
+[![Dependency](https://www.versioneye.com/user/projects/55c9a6cb812cc40017000001/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55c9a6cb812cc40017000001)
 [![Code Climate](https://codeclimate.com/github/Voradius/Api/badges/gpa.svg)](https://codeclimate.com/github/Voradius/Api)
 
 # Voradius API
