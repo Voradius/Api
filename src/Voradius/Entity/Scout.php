@@ -22,6 +22,11 @@ class Scout extends AbstractEntity implements EntityInterface
     private $client;
 
     /**
+     * @var array
+     */
+    private $replyWhitelist = [ 'in_assortment', 'in_stock', 'has_alternative', 'can_order', 'price', 'comment' ];
+
+    /**
      * Product constructor.
      */
     public function __construct(ClientInterface $client)
@@ -71,13 +76,9 @@ class Scout extends AbstractEntity implements EntityInterface
      * @param array $data
      * @return bool
      */
-    public function retailerReply($id, $unique, array $data) {
-        $whitelist = [ 'in_assortment', 'in_stock', 'has_alternative', 'can_order', 'price', 'comment' ];
-        foreach ($data as $key => $value) {
-            if (!in_array($key, $whitelist)) {
-                unset($data[ $key ]);
-            }
-        }
+    public function retailerReply($id, $unique, array $params) {
+        $this->noNullParameters($id, $unique);
+        $this->notWhitelistedParameters($params, $this->replyWhitelist);
 
         if (empty($data)) {
             return false;

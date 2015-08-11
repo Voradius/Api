@@ -20,6 +20,11 @@ class Reservation extends AbstractEntity implements EntityInterface
     private $client;
 
     /**
+     * @var array
+     */
+    private $searchWhitelist = [ 'firstname', 'lastname', 'email', 'shop_id', 'product_id', 'phone' ];
+
+    /**
      * Product constructor.
      */
     public function __construct(ClientInterface $client)
@@ -28,32 +33,23 @@ class Reservation extends AbstractEntity implements EntityInterface
     }
 
     /**
-     * @param $first_name
-     * @param $last_name
-     * @param $email
-     * @param $shop_id
-     * @param $product_id
-     * @param $phonenumber
+     * @param array $params
      * @param null $product_request_id
      * @return bool
+     * @throws \Voradius\Exceptions\InvalidParameterException
+     * @throws \Voradius\Exceptions\ParameterNotAllowedException
      */
-    public function addReservation($first_name, $last_name, $email, $shop_id, $product_id, $phonenumber, $product_request_id = null)
+    public function addReservation(array $params, $product_request_id = null)
     {
-        $form_params = array(
-            'firstname' => $first_name,
-            'lastname' => $last_name,
-            'email' => $email,
-            'shop_id' => $shop_id,
-            'product_id' => $product_id,
-            'phone' => $phonenumber
-        );
+        $this->noNullParameters((isset($params['shop_id']) ?: null), (isset($params['product_id']) ?: null));
+        $this->notWhitelistedParameters($params, $this->searchWhitelist);
 
         $response = $this->client->getConnection()->post(
             Url::build('/product/iframe', '', [
-                'shop_id' => $shop_id,
-                'product_id' => $product_id,
+                'shop_id' => $params['shop_id'],
+                'product_id' => $params['product_id'],
                 'product_request_id' => $product_request_id ]),
-            [ 'body' => $form_params ]
+            [ 'body' => $params ]
         );
 
         if ($response->getStatusCode() === 200) {
