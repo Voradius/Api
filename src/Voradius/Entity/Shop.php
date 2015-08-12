@@ -63,7 +63,7 @@ class Shop extends AbstractEntity implements EntityInterface
      */
     public function getSearch(array $params) {
         if (empty($params)) {
-            throw new InvalidParameterException('Atleast one parameter is required. Choose from: ' . array_keys($this->searchWhitelist));
+            throw new InvalidParameterException('Atleast one parameter is required. Choose from: ' . implode(', ', $this->searchWhitelist));
         }
 
         $this->notWhitelistedParameters($params, $this->searchWhitelist);
