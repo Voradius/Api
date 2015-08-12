@@ -22,7 +22,19 @@ class Reservation extends AbstractEntity implements EntityInterface
     /**
      * @var array
      */
-    private $searchWhitelist = [ 'firstname', 'lastname', 'email', 'shop_id', 'product_id', 'phone' ];
+    private $searchWhitelist = [
+        'firstname',
+        'lastname',
+        'email',
+        'shop_id',
+        'product_id',
+        'phone',
+        'street_name',
+        'street_number',
+        'zipcode',
+        'city',
+        'delivery_type'
+    ];
 
     /**
      * Product constructor.
