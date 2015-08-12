@@ -38,17 +38,18 @@ class Shop extends AbstractEntity implements EntityInterface
      *
      * @param null $category_id
      * @param string $location
+     * @param integer $range
      * @return mixed
      * @throws InvalidParameterException
      */
-    public function getByCategoryId($category_id = null, $location = 'Amsterdam')
+    public function getByCategoryId($category_id = null, $location = 'Amsterdam', $range = 2)
     {
         $this->noNullParameters($category_id, $location);
 
         $response = $this->client->getConnection()->get(Url::build(self::PATH, 'search', [
             'category' => $category_id,
             'location' => $location,
-            'range' => 2,
+            'range' => $range,
             'size' => 200,
             'scout' => 1 ]));
         return $response->getBody()->getContents();
