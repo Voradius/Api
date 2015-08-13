@@ -23,7 +23,7 @@ class Scout extends AbstractEntity implements EntityInterface
     /**
      * @var array
      */
-    private $replyWhitelist = ['in_assortment', 'in_stock', 'has_alternative', 'can_order', 'price', 'comment'];
+    private $replyWhitelist = ['in_assortment', 'in_stock', 'has_alternative', 'can_order', 'price', 'comment', 'shop'];
 
     /**
      * @var array
