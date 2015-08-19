@@ -130,7 +130,7 @@ class Scout extends AbstractEntity implements EntityInterface
     public function getShopRequests($unique = null) {
         $this->noNullParameters($unique);
 
-        $response = $this->client->getConnection()->get(Url::build(self::PATH.'s/list',['unique'=>$unique]));
+        $response = $this->client->getConnection()->get(Url::build(self::PATH.'s','list',['key'=>$unique]));
         return $response->getBody()->getContents();
     }
 }
