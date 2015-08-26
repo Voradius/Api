@@ -133,4 +133,30 @@ class Scout extends AbstractEntity implements EntityInterface
         $response = $this->client->getConnection()->get(Url::build(self::PATH.'s','list',['key'=>$unique]));
         return $response->getBody()->getContents();
     }
+
+    /**
+     * @param int $id Queue ID
+     * @return mixed
+     * @throws \Voradius\Exceptions\InvalidParameterException
+     */
+    public function getShopQueueDetail($id) {
+        $this->noNullParameters($id);
+
+        $response = $this->client->getConnection()->get(Url::build(self::PATH.'s','queue-detail',['id'=>$id]));
+        return $response->getBody()->getContents();
+    }
+
+    /**
+     * Get a list of requests by email address
+     *
+     * @param $email Email of the user
+     * @return mixed
+     * @throws \Voradius\Exceptions\InvalidParameterException
+     */
+    public function getUserRequests($email) {
+        $this->noNullParameters($email);
+
+        $response = $this->client->getConnection()->get(Url::build(self::PATH.'s','list-by-email',['email'=>$email]));
+        return $response->getBody()->getContents();
+    }
 }
